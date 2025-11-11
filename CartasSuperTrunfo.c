@@ -5,19 +5,75 @@
 PROGRAMA: Super Trunfo - Nível Intermediário
 AUTOR: Carlos Eduardo
 DATA: 10/11/2025
-VERSÃO: 4.0
+VERSÃO: 5.0
 LINGUAGEM: C
 
-DESCRIÇÃO:
-Este programa cadastra duas cartas do jogo Super Trunfo, 
-armazenando informações sobre cidades. Em seguida, ele calcula
-a Densidade Populacional e o PIB per Capita de cada cidade,
-e compara as cartas com base no atributo "População".
+===========================================================
+DESCRIÇÃO GERAL:
+Este programa simula a comparação entre duas cartas do jogo 
+Super Trunfo, representando cidades ou países, utilizando 
+atributos como população, área, PIB, número de pontos turísticos 
+e densidade demográfica.
 
-A carta com a MAIOR população vence.
+Nesta versão, o sistema foi aprimorado com a adição de um 
+menu interativo, permitindo ao jogador escolher qual atributo 
+será usado para comparar as cartas. A interface do menu foi 
+desenvolvida utilizando a estrutura de decisão "switch", e 
+a lógica de comparação entre os atributos utiliza estruturas 
+"if" e "if-else" aninhadas para criar regras específicas 
+para cada tipo de atributo.
 
-O código não utiliza estruturas de repetição (for, while).
+===========================================================
+FUNCIONALIDADES PRINCIPAIS:
 
+1. Cadastro das Cartas:
+   - O jogador insere os dados de duas cartas, incluindo:
+     • Estado
+     • Código da carta
+     • Nome da cidade
+     • População
+     • Área (km²)
+     • PIB (em bilhões de reais)
+     • Número de pontos turísticos
+
+2. Cálculos Automáticos:
+   - O programa calcula automaticamente:
+     • Densidade Demográfica = População / Área
+     • PIB per Capita = (PIB × 1.000.000.000) / População
+
+3. Menu Interativo com "switch":
+   - Após o cadastro, o jogador escolhe o atributo de comparação:
+       1 - População
+       2 - Área
+       3 - PIB
+       4 - Número de Pontos Turísticos
+       5 - Densidade Demográfica
+       6 - Sair
+   - A opção “6 - Sair” encerra o programa de forma amigável.
+
+4. Regras de Comparação:
+   - Regra geral: vence a carta com o MAIOR valor do atributo escolhido.
+   - Exceção: para a Densidade Demográfica, vence a carta com o MENOR valor.
+   - Em caso de igualdade, o programa exibe a mensagem “Empate!”.
+
+===========================================================
+CONCEITOS DE PROGRAMAÇÃO UTILIZADOS:
+- Entrada e saída de dados (scanf, printf)
+- Estruturas de decisão:
+  • if, else if, else
+  • switch para seleção de opções no menu
+- Operações matemáticas:
+  • Cálculo de densidade demográfica e PIB per capita
+- Tratamento de opções inválidas com "default" no switch
+
+===========================================================
+OBJETIVO DO NÍVEL:
+Desenvolver a lógica de decisão e interação com o usuário,
+introduzindo o uso combinado de "switch" e "if-else" aninhados,
+além de reforçar boas práticas de programação como:
+• Código limpo e bem comentado
+• Saídas claras e intuitivas
+• Organização das etapas do programa
 ===========================================================
 */
 
@@ -98,24 +154,102 @@ int main() {
     printf("Digite o numero de pontos turisticos: ");
     scanf("%d", &pontosTuristicos2);
 
-    // Cálculos da Densidade populacional e PIB per Capita da Carta 2
+  // Cálculos da Densidade populacional e PIB per Capita da Carta 2
     densidade2 = populacao2 / area2;
     pibPerCapita2 = (pib2 * 1000000000) / populacao2;
     
 
-  // Área para exibição das comparações das Cartas
-    printf("\n=== Comparacao de Cartas (Atributo: Populacao) ===\n");
-    printf("Carta 1 - %s (%c): %d habitantes\n", nomeCidade1, estado1, populacao1);
-    printf("Carta 2 - %s (%c): %d habitantes\n", nomeCidade2, estado2, populacao2);
+  // ===== Menu Interativo com opção de sair =====
+    int opcao;
+        printf("\n=== MENU DE COMPARACAO ===\n");
+        printf("1 - Populacao\n");
+        printf("2 - Area\n");
+        printf("3 - PIB\n");
+        printf("4 - Numero de Pontos Turisticos\n");
+        printf("5 - Densidade Demografica\n");
+        printf("6 - Sair\n");
+        printf("Escolha um atributo para comparar (1-6): ");
+        scanf("%d", &opcao);
 
-  // Lógica de comparação usando if e if-else
-    if (populacao1 > populacao2) {
-        printf("\nResultado: Carta 1 (%s) venceu!\n", nomeCidade1);
-    } else if (populacao2 > populacao1) {
-        printf("\nResultado: Carta 2 (%s) venceu!\n", nomeCidade2);
-    } else {
-        printf("\nResultado: Empate! As duas cidades possuem a mesma populacao.\n");
-    }
+        switch (opcao) {
+            case 1: // População
+                printf("\n=== Comparacao: Populacao ===\n");
+                printf("%s: %d habitantes\n", nomeCidade1, populacao1);
+                printf("%s: %d habitantes\n", nomeCidade2, populacao2);
+
+                if (populacao1 > populacao2) {
+                    printf("Resultado: %s venceu!\n", nomeCidade1);
+                } else if (populacao2 > populacao1) {
+                    printf("Resultado: %s venceu!\n", nomeCidade2);
+                } else {
+                    printf("Resultado: Empate!\n");
+                }
+                break;
+
+            case 2: // Área
+                printf("\n=== Comparacao: Area ===\n");
+                printf("%s: %.2f km²\n", nomeCidade1, area1);
+                printf("%s: %.2f km²\n", nomeCidade2, area2);
+
+                if (area1 > area2) {
+                    printf("Resultado: %s venceu!\n", nomeCidade1);
+                } else if (area2 > area1) {
+                    printf("Resultado: %s venceu!\n", nomeCidade2);
+                } else {
+                    printf("Resultado: Empate!\n");
+                }
+                break;
+
+            case 3: // PIB
+                printf("\n=== Comparacao: PIB ===\n");
+                printf("%s: %.2f bilhões de R$\n", nomeCidade1, pib1);
+                printf("%s: %.2f bilhões de R$\n", nomeCidade2, pib2);
+
+                if (pib1 > pib2) {
+                    printf("Resultado: %s venceu!\n", nomeCidade1);
+                } else if (pib2 > pib1) {
+                    printf("Resultado: %s venceu!\n", nomeCidade2);
+                } else {
+                    printf("Resultado: Empate!\n");
+                }
+                break;
+
+            case 4: // Pontos turísticos
+                printf("\n=== Comparacao: Pontos Turisticos ===\n");
+                printf("%s: %d pontos\n", nomeCidade1, pontosTuristicos1);
+                printf("%s: %d pontos\n", nomeCidade2, pontosTuristicos2);
+
+                if (pontosTuristicos1 > pontosTuristicos2) {
+                    printf("Resultado: %s venceu!\n", nomeCidade1);
+                } else if (pontosTuristicos2 > pontosTuristicos1) {
+                    printf("Resultado: %s venceu!\n", nomeCidade2);
+                } else {
+                    printf("Resultado: Empate!\n");
+                }
+                break;
+
+            case 5: // Densidade Demográfica (menor vence)
+                printf("\n=== Comparacao: Densidade Demografica ===\n");
+                printf("%s: %.2f hab/km²\n", nomeCidade1, densidade1);
+                printf("%s: %.2f hab/km²\n", nomeCidade2, densidade2);
+
+                if (densidade1 < densidade2) {
+                    printf("Resultado: %s venceu! (menor densidade)\n", nomeCidade1);
+                } else if (densidade2 < densidade1) {
+                    printf("Resultado: %s venceu! (menor densidade)\n", nomeCidade2);
+                } else {
+                    printf("Resultado: Empate!\n");
+                }
+                break;
+
+            case 6:
+                printf("\nSaindo do programa... Obrigado por jogar Super Trunfo!\n");
+                break;
+
+            default:
+                printf("\nOpcao invalida! Escolha um número entre 1 e 6.\n");
+                break;
+        }
 
 return 0;
 } 
